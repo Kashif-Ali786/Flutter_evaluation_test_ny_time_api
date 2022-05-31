@@ -17,7 +17,7 @@ class ArticleListPage extends StatefulWidget {
 }
 
 class _ArticleListPageState extends State<ArticleListPage> {
-  final ArticleController _articleController = ArticleController();
+  final ArticleController _articleController = ArticleController(APIService());
   @override
   void initState() {
     super.initState();
@@ -106,10 +106,10 @@ class _ArticleListPageState extends State<ArticleListPage> {
                             }),
                           ),
                           _articleController.showMoreLoadingProgress
-                              ? Column(
-                                  children: const [
-                                    CircularProgressIndicator.adaptive(),
-                                  ],
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                    key: Key('progress-indicator'),
+                                  ),
                                 )
                               : const SizedBox(),
                         ],

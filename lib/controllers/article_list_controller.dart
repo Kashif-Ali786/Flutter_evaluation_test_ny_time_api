@@ -6,6 +6,8 @@ import 'package:newyork_times_assessment/services/api_service.dart';
 import 'package:newyork_times_assessment/utils/view_utils.dart';
 
 class ArticleController extends GetxController {
+  final APIService _apiService;
+  ArticleController(this._apiService);
   final Rx<bool> _showProgress = false.obs;
   bool get showProgress => _showProgress.value;
   final Rx<bool> _showMoreLoadingProgress = false.obs;
@@ -22,14 +24,14 @@ class ArticleController extends GetxController {
 
   Future<void> getArticles({String? query, category}) async {
     List<Article>? articles;
+    _showProgress.value = true;
 
     try {
       if (await ConnectionVerify.connectionStatus()) {
-        _showProgress.value = true;
         if (query != null) {
-          articles = await APIService().search(query, page);
+          articles = await _apiService.search(query, page);
         } else {
-          articles = await APIService().fetchMostPopularArticles(category!);
+          articles = await _apiService.fetchMostPopularArticles(category!);
         }
         _articles.value = articles!;
         await GetStorage().write("article", _articles.value);
@@ -51,7 +53,7 @@ class ArticleController extends GetxController {
       if (query != null) {
         _page.value++;
         _showMoreLoadingProgress.value = true;
-        var res = await APIService().search(query!, _page.value);
+        var res = await _apiService.search(query!, _page.value);
         if (res!.length < 10) {
           _isMoreDataAvailable.value = false;
         }
