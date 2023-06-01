@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newyork_times_assessment/screens/search_page.dart';
 import 'package:newyork_times_assessment/widgets/app_bar.dart';
 import 'package:newyork_times_assessment/widgets/article_card.dart';
+import 'package:newyork_times_assessment/widgets/tile_widget.dart';
 
 import 'article_list_page.dart';
 
@@ -11,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBarWidget(title: "NYT"),
+      appBar: AppBarWidget(title: "NYT"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -59,11 +60,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-  titleWidget(text, BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Text(text, style: Theme.of(context).textTheme.titleSmall),
-      );
 
   gotoNewScreen({BuildContext? ctx, Widget? route}) async {
     Navigator.push(

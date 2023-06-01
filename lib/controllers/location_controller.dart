@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:newyork_times_assessment/utils/view_utils.dart';
 
 class LocationController extends GetxController {
   LocationController() {
-    getLocation();
+    _fetchCurrentPosition();
   }
 
   final RxString _latitude = 'Unknown'.obs;
@@ -11,20 +12,7 @@ class LocationController extends GetxController {
   final RxString _longitude = 'Unknown'.obs;
   String get longitude => _latitude.value;
 
-  Future<void> getLocation() async {
-    _determinePosition();
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      _latitude.value = '${position.latitude}';
-      _longitude.value = '${position.longitude}';
-    } catch (e) {
-      _latitude.value = 'Error';
-      _longitude.value = 'Error';
-    }
-  }
-
-  Future<Position> _determinePosition() async {
+  Future<Position> _fetchCurrentPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -34,7 +22,7 @@ class LocationController extends GetxController {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      Get.rawSnackbar(message: 'Location services are disabled.');
+      showSnackbar('Location services are disabled.');
       return Future.error('Location services are disabled.');
     }
 
@@ -47,22 +35,25 @@ class LocationController extends GetxController {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        Get.rawSnackbar(message: 'Location permissions are denied');
+        showSnackbar('Location permissions are denied');
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      Get.rawSnackbar(
-          message:
-              'Location permissions are permanently denied, we cannot request permissions.');
+      showSnackbar(
+          'Location permissions are permanently denied, we cannot request permissions.');
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    _latitude.value = '${position.latitude}';
+    _longitude.value = '${position.longitude}';
     return await Geolocator.getCurrentPosition();
   }
 }

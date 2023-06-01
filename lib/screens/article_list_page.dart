@@ -19,10 +19,12 @@ class ArticleListPage extends StatefulWidget {
 
 class _ArticleListPageState extends State<ArticleListPage> {
   final ArticleController _articleController = ArticleController(APIService());
+
   @override
   void initState() {
     super.initState();
-    _fetchArticles();
+    _articleController.getArticles(
+        query: widget.query, category: widget.category);
   }
 
   @override
@@ -125,10 +127,5 @@ class _ArticleListPageState extends State<ArticleListPage> {
         );
       }),
     );
-  }
-
-  void _fetchArticles() {
-    _articleController.getArticles(
-        query: widget.query, category: widget.category);
   }
 }

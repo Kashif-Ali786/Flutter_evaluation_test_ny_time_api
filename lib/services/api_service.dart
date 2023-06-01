@@ -14,7 +14,6 @@ class APIService {
         cat.contains("shared") ? "$cat/$PERIOD/facebook.json" : "$cat/$PERIOD.json";
     var url = '/svc/mostpopular/v2/$endpoint';
     Uri uri = Uri.https(_baseUrl, url, parameters);
-    print("uri $uri");
     try {
       var response = await http.get(uri);
       Map<String, dynamic> data = json.decode(response.body);
@@ -23,7 +22,6 @@ class APIService {
       data["results"].forEach(
         (res) => _list.add(Article.fromJson(res)),
       );
-      print("data ${data}");
 
       return _list;
     } catch (err) {
@@ -39,7 +37,6 @@ class APIService {
     };
     Uri uri =
         Uri.https(_baseUrl, "/svc/search/v2/articlesearch.json", parameters);
-    print("uri $uri");
     try {
       var response = await http.get(uri);
       Map<String, dynamic> data = json.decode(response.body);
@@ -50,7 +47,6 @@ class APIService {
             title: doc["abstract"] ?? "",
             publishedDate: DateTime.parse(doc["pub_date"]))),
       );
-      print("data ${data["response"]["docs"]}");
 
       return _list;
     } catch (err) {

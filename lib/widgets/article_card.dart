@@ -21,8 +21,8 @@ class ArticleCategroyCard extends StatelessWidget {
               children: [
                 Text(title ?? "Search Articles",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Colors.black45,
-                    )),
+                          color: Colors.black45,
+                        )),
                 const Icon(
                   Icons.arrow_forward_ios_rounded,
                   color: Colors.black45,
@@ -37,8 +37,8 @@ class ArticleCategroyCard extends StatelessWidget {
   }
 
   Divider get buildDivider => const Divider(
-    color: Colors.black38,
-    height: 8,
-    thickness: .5,
-  );
+        color: Colors.black38,
+        height: 8,
+        thickness: .5,
+      );
 }
