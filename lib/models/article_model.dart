@@ -41,7 +41,7 @@ class Article {
   DateTime? publishedDate;
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
-        title: json["title"] == null ? null : json["title"],
+        title: json["title"],
         url: json["url"] == null ? null : json["url"],
         publishedDate: json["published_date"] == null
             ? null

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:newyork_times_assessment/controllers/article_list_controller.dart';
 import 'package:newyork_times_assessment/models/article_model.dart';
 import 'package:newyork_times_assessment/services/api_service.dart';
+import 'package:newyork_times_assessment/widgets/app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ArticleListPage extends StatefulWidget {
@@ -27,10 +28,7 @@ class _ArticleListPageState extends State<ArticleListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Articles"),
-        automaticallyImplyLeading: true,
-      ),
+      appBar: AppBarWidget(title: "Articles"),
       body: Obx(() {
         return NotificationListener(
           onNotification: (ScrollNotification scrollInfo) {
@@ -48,13 +46,13 @@ class _ArticleListPageState extends State<ArticleListPage> {
               Center(
                 child: Text(
                   widget.query != null
-                      ? "Result for '${widget.query}'"
-                      : 'The New York Times\n${widget.category} Articles',
+                      ? "Results for '${widget.query}'"
+                      : 'The New York Times\n${widget.category!.toUpperCase()} articles',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 24.0,
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5,
+                    // letterSpacing: 1.5,
                   ),
                 ),
               ),
@@ -64,6 +62,8 @@ class _ArticleListPageState extends State<ArticleListPage> {
                       padding: const EdgeInsets.all(8),
                       child: Column(
                         children: [
+                          if (_articleController.articles.isEmpty)
+                            const Text("No Article found."),
                           ListView(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -89,8 +89,9 @@ class _ArticleListPageState extends State<ArticleListPage> {
                                     ),
                                     child: ListTile(
                                       title: Text(
-                                        result.title!,
-                                        maxLines: 2,
+                                        result.title ?? "Empty",
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       subtitle: Padding(
                                         padding: const EdgeInsets.only(top: 5),

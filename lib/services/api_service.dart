@@ -5,12 +5,13 @@ import 'package:newyork_times_assessment/models/article_model.dart';
 class APIService {
   final String _baseUrl = 'api.nytimes.com';
   static const String API_KEY = 'kAs7gCtSVjvLNlIrXLXdC2wvgCvXZpVf';
+  static const String PERIOD = '30'; //(1 day, 7 days, or 30 days).
   // static const String secret = 'ELfd9NZr35SaoCai';
 
   Future<List<Article>> fetchMostPopularArticles(String cat) async {
     Map<String, String> parameters = {'api-key': API_KEY};
     var endpoint =
-        cat.contains("shared") ? "$cat/30/facebook.json" : "$cat/30.json";
+        cat.contains("shared") ? "$cat/$PERIOD/facebook.json" : "$cat/$PERIOD.json";
     var url = '/svc/mostpopular/v2/$endpoint';
     Uri uri = Uri.https(_baseUrl, url, parameters);
     print("uri $uri");
@@ -47,7 +48,7 @@ class APIService {
       data["response"]["docs"].forEach(
         (doc) => _list.add(Article(
             title: doc["abstract"] ?? "",
-            publishedDate: DateTime?.parse(doc["pub_date"]))),
+            publishedDate: DateTime.parse(doc["pub_date"]))),
       );
       print("data ${data["response"]["docs"]}");
 

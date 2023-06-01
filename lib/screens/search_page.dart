@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newyork_times_assessment/screens/article_list_page.dart';
+import 'package:newyork_times_assessment/widgets/app_bar.dart';
 
 class SearchPage extends StatelessWidget {
   TextEditingController controller = TextEditingController();
@@ -10,10 +11,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Search Articles"),
-        automaticallyImplyLeading: true,
-      ),
+      appBar:  AppBarWidget(title: "Search Articles"),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

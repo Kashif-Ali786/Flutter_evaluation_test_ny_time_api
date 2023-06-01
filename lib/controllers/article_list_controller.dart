@@ -1,9 +1,11 @@
 import 'package:connection_verify/connection_verify.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart';
 import 'package:newyork_times_assessment/models/article_model.dart';
 import 'package:newyork_times_assessment/services/api_service.dart';
 import 'package:newyork_times_assessment/utils/view_utils.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ArticleController extends GetxController {
   final APIService _apiService;
@@ -34,6 +36,8 @@ class ArticleController extends GetxController {
           articles = await _apiService.fetchMostPopularArticles(category!);
         }
         _articles.value = articles!;
+
+        ///Point4: TODO::Latest fetched articles must be saved in local db and will be fetched if the device is offline
         await GetStorage().write("article", _articles.value);
       } else {
         showSnackbar(

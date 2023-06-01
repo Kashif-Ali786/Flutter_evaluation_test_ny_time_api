@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:newyork_times_assessment/controllers/article_list_controller.dart';
 import 'package:newyork_times_assessment/screens/home_page.dart';
+import 'package:newyork_times_assessment/services/api_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -10,23 +10,23 @@ import 'package:newyork_times_assessment/services/api_service.dart';
 class MockAPIService extends Mock implements APIService {}
 
 void main() {
-  late MockAPIService mockAPIService;
-
-  setUp(() {
-    mockAPIService = MockAPIService();
-  });
-
-  final articlesFromService = [
-    Article(title: 'Test 1', publishedDate: DateTime.now()),
-    Article(title: 'Test 2', publishedDate: DateTime.now()),
-    Article(title: 'Test 3', publishedDate: DateTime.now()),
-  ];
-
-  void arrangeAPIServiceReturns3Articles() {
-    when(() => mockAPIService.fetchMostPopularArticles("viewed")).thenAnswer(
-      (_) async => articlesFromService,
-    );
-  }
+  // late MockAPIService mockAPIService;
+  //
+  // setUp(() {
+  //   mockAPIService = MockAPIService();
+  // });
+  //
+  // final articlesFromService = [
+  //   Article(title: 'Test 1', publishedDate: DateTime.now()),
+  //   Article(title: 'Test 2', publishedDate: DateTime.now()),
+  //   Article(title: 'Test 3', publishedDate: DateTime.now()),
+  // ];
+  //
+  // void arrangeAPIServiceReturns3Articles() {
+  //   when(() => mockAPIService.fetchMostPopularArticles("viewed")).thenAnswer(
+  //     (_) async => articlesFromService,
+  //   );
+  // }
 
   Widget createWidgetUnderTest() {
     return GetMaterialApp(
@@ -61,7 +61,7 @@ void main() {
   testWidgets(
     "title and article categories are displayed",
     (WidgetTester tester) async {
-      arrangeAPIServiceReturns3Articles();
+      // arrangeAPIServiceReturns3Articles();
       await tester.pumpWidget(createWidgetUnderTest());
       expect(find.text('NYT'), findsOneWidget);
       expect(find.text('Most Viewed'), findsOneWidget);
